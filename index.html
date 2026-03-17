@@ -1,0 +1,1439 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Smart School Management System | Teacher Asad Abbas</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Login Page */
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h2 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .login-header p i {
+            color: #ffd700;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 20px auto;
+            background: #f4f7fc;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            display: none;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid #ffd700;
+        }
+
+        .school-name h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .school-name h1 i {
+            color: #ffd700;
+            margin-right: 10px;
+        }
+
+        .designer-credit {
+            background: rgba(255,215,0,0.2);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid #ffd700;
+            text-align: center;
+        }
+
+        .designer-credit p {
+            font-size: 14px;
+        }
+
+        .designer-credit i {
+            color: #ffd700;
+            margin: 0 5px;
+        }
+
+        .designer-name {
+            color: #ffd700;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .logout-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            padding: 10px 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f0f2f5;
+            padding: 8px 15px;
+            border-radius: 50px;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 25px;
+        }
+
+        /* Editable Cards */
+        .editable-card {
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .editable-card:hover {
+            box-shadow: 0 10px 30px rgba(102,126,234,0.2);
+        }
+
+        .edit-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: none;
+            gap: 5px;
+            z-index: 100;
+        }
+
+        .editable-card:hover .edit-controls {
+            display: flex;
+        }
+
+        .edit-btn, .save-btn, .delete-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .edit-btn {
+            background: #667eea;
+            color: white;
+        }
+
+        .save-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .edit-btn:hover, .save-btn:hover, .delete-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon i {
+            font-size: 30px;
+            color: white;
+        }
+
+        .stat-info {
+            flex: 1;
+        }
+
+        .stat-info h3 {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .stat-info .number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .editable-input {
+            width: 100%;
+            padding: 5px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Modules Grid */
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0 20px;
+        }
+
+        .section-title h2 {
+            color: #333;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .add-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .add-btn:hover {
+            background: #218838;
+        }
+
+        /* Tables */
+        .data-table {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow-x: auto;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            color: #666;
+        }
+
+        tr:hover td {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-paid {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* Fee Cards */
+        .fee-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .fee-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .modal-content input, .modal-content select, .modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .save-modal-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .cancel-modal-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            padding: 15px 25px;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+
+        .footer i {
+            color: #ffd700;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-container">
+        <div class="login-header">
+            <i class="fas fa-school" style="font-size: 50px; color: #667eea; margin-bottom: 20px;"></i>
+            <h2>The Smart School</h2>
+            <p><i class="fas fa-map-marker-alt"></i> Bilal Campus Piplan</p>
+            <p style="margin-top: 10px; color: #999;">Designed by Teacher Asad Abbas</p>
+        </div>
+        
+        <div class="input-group">
+            <label><i class="fas fa-user"></i> Username</label>
+            <input type="text" id="username" placeholder="Enter username" value="admin">
+        </div>
+        
+        <div class="input-group">
+            <label><i class="fas fa-lock"></i> Password</label>
+            <input type="password" id="password" placeholder="Enter password" value="admin123">
+        </div>
+        
+        <button class="login-btn" onclick="login()">
+            <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+        </button>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="school-name">
+                <h1><i class="fas fa-school"></i> The Smart School</h1>
+                <p style="font-size: 12px;">Bilal Campus Piplan</p>
+            </div>
+            <div class="designer-credit">
+                <p><i class="fas fa-code"></i> Designed by <span class="designer-name">Teacher Asad Abbas</span></p>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navbar">
+            <div class="nav-links">
+                <div class="nav-item active" onclick="showSection('dashboard')">
+                    <i class="fas fa-home"></i> Dashboard
+                </div>
+                <div class="nav-item" onclick="showSection('students')">
+                    <i class="fas fa-user-graduate"></i> Students
+                </div>
+                <div class="nav-item" onclick="showSection('teachers')">
+                    <i class="fas fa-chalkboard-teacher"></i> Teachers
+                </div>
+                <div class="nav-item" onclick="showSection('fees')">
+                    <i class="fas fa-rupee-sign"></i> Fees
+                </div>
+                <div class="nav-item" onclick="showSection('attendance')">
+                    <i class="fas fa-calendar-check"></i> Attendance
+                </div>
+                <div class="nav-item" onclick="showSection('exams')">
+                    <i class="fas fa-pencil-alt"></i> Exams
+                </div>
+                <div class="nav-item" onclick="showSection('library')">
+                    <i class="fas fa-book"></i> Library
+                </div>
+                <div class="nav-item" onclick="showSection('transport')">
+                    <i class="fas fa-bus"></i> Transport
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="user-badge" id="userBadge">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="loggedInUser">Guest</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content" id="mainContent">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><i class="fas fa-copyright"></i> 2026 The Smart School Bilal Campus Piplan | All Rights Reserved</p>
+            <p style="margin-top: 5px; color: #999;">Complete School Management System | Designed with <i class="fas fa-heart" style="color: #ff4d4d;"></i> by Teacher Asad Abbas</p>
+        </div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Add New</h3>
+            <div id="modalBody"></div>
+            <div class="modal-buttons">
+                <button class="save-modal-btn" onclick="saveModalData()">Save</button>
+                <button class="cancel-modal-btn" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global Variables
+        let currentUser = null;
+        let currentSection = 'dashboard';
+        let editingId = null;
+        let editingType = null;
+
+        // ========== LOGIN SYSTEM ==========
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === '' || password === '') {
+                alert('Please enter username and password!');
+                return;
+            }
+            
+            if ((username === 'admin' && password === 'admin123') ||
+                (username === 'teacher' && password === 'teacher123') ||
+                (username === 'accountant' && password === 'acc123')) {
+                
+                currentUser = username;
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                document.getElementById('loggedInUser').textContent = 
+                    username.charAt(0).toUpperCase() + username.slice(1);
+                
+                loadDefaultData();
+                showSection('dashboard');
+            } else {
+                alert('Invalid username or password!');
+            }
+        }
+
+        function logout() {
+            document.getElementById('loginPage').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+        }
+
+        // ========== DATA STORAGE ==========
+        function loadDefaultData() {
+            if (!localStorage.getItem('schoolData')) {
+                const defaultData = {
+                    stats: {
+                        totalStudents: { value: '1,250', label: 'Total Students' },
+                        totalTeachers: { value: '85', label: 'Total Teachers' },
+                        monthlyCollection: { value: '₹28.5L', label: 'Monthly Collection' },
+                        todayAttendance: { value: '92%', label: "Today's Attendance" }
+                    },
+                    students: [
+                        { id: 1, name: 'Ali Raza', father: 'Mohammad Akram', class: '5-A', admissionDate: '15 Mar 2026', feeStatus: 'Paid' },
+                        { id: 2, name: 'Sara Khan', father: 'Zafar Iqbal', class: '8-B', admissionDate: '14 Mar 2026', feeStatus: 'Pending' },
+                        { id: 3, name: 'Bilal Ahmed', father: 'Khan Mohammad', class: '10-C', admissionDate: '14 Mar 2026', feeStatus: 'Paid' },
+                        { id: 4, name: 'Ayesha Malik', father: 'Tariq Mehmood', class: '7-A', admissionDate: '13 Mar 2026', feeStatus: 'Paid' },
+                        { id: 5, name: 'Hassan Ali', father: 'Abdul Ghani', class: '9-B', admissionDate: '13 Mar 2026', feeStatus: 'Pending' }
+                    ],
+                    teachers: [
+                        { id: 1, name: 'Mr. Ahmed Khan', subject: 'Mathematics', qualification: 'M.Sc', experience: '8 years' },
+                        { id: 2, name: 'Ms. Fatima Ali', subject: 'English', qualification: 'M.A', experience: '5 years' },
+                        { id: 3, name: 'Mr. Usman Ghani', subject: 'Physics', qualification: 'M.Phil', experience: '10 years' }
+                    ],
+                    fees: [
+                        { id: 1, student: 'Ali Raza', class: '5-A', amount: '12,500', date: '15 Mar 2026', mode: 'UPI', status: 'Paid' },
+                        { id: 2, student: 'Sara Khan', class: '8-B', amount: '15,000', date: '15 Mar 2026', mode: 'Credit Card', status: 'Paid' },
+                        { id: 3, student: 'Bilal Ahmed', class: '10-C', amount: '18,000', date: '14 Mar 2026', mode: 'Cash', status: 'Paid' }
+                    ],
+                    attendance: [
+                        { id: 1, class: '1-A', total: '45', present: '42', absent: '3', percentage: '93%' },
+                        { id: 2, class: '2-B', total: '38', present: '35', absent: '3', percentage: '92%' },
+                        { id: 3, class: '3-C', total: '42', present: '40', absent: '2', percentage: '95%' },
+                        { id: 4, class: '4-A', total: '40', present: '38', absent: '2', percentage: '95%' },
+                        { id: 5, class: '5-B', total: '35', present: '32', absent: '3', percentage: '91%' }
+                    ],
+                    exams: [
+                        { id: 1, name: 'Mid Term 2026', class: '5-A', subject: 'Mathematics', date: '20 Mar 2026', time: '09:00 AM', status: 'Scheduled' },
+                        { id: 2, name: 'Mid Term 2026', class: '8-B', subject: 'Science', date: '21 Mar 2026', time: '09:00 AM', status: 'Scheduled' },
+                        { id: 3, name: 'Final Term 2026', class: '10-C', subject: 'Physics', date: '25 Mar 2026', time: '10:00 AM', status: 'Scheduled' }
+                    ],
+                    books: [
+                        { id: 1, bookId: 'B001', name: 'Mathematics 5', author: 'R.D. Sharma', issuedTo: 'Ali Raza', issueDate: '10 Mar 2026', dueDate: '24 Mar 2026' },
+                        { id: 2, bookId: 'B002', name: 'Science 8', author: 'H.C. Verma', issuedTo: 'Sara Khan', issueDate: '12 Mar 2026', dueDate: '26 Mar 2026' },
+                        { id: 3, bookId: 'B003', name: 'English 7', author: 'Wren & Martin', issuedTo: 'Bilal Ahmed', issueDate: '15 Mar 2026', dueDate: '29 Mar 2026' }
+                    ],
+                    routes: [
+                        { id: 1, routeNo: 'R-01', driver: 'Mohammad Ali', vehicle: 'ABC-1234', stops: '8', students: '45', status: 'Active' },
+                        { id: 2, routeNo: 'R-02', driver: 'Ahmed Khan', vehicle: 'XYZ-5678', stops: '6', students: '38', status: 'Active' },
+                        { id: 3, routeNo: 'R-03', driver: 'Sarfraz Ahmed', vehicle: 'DEF-9012', stops: '7', students: '42', status: 'Active' }
+                    ],
+                    modules: [
+                        { id: 1, name: 'Admission Management', icon: 'door-open', pending: '45', progress: 75 },
+                        { id: 2, name: 'Student Information', icon: 'id-card', pending: '1,250', progress: 100 },
+                        { id: 3, name: 'Fee Management', icon: 'money-bill-wave', pending: '₹8.2L', progress: 85 },
+                        { id: 4, name: 'Attendance', icon: 'fingerprint', pending: '92%', progress: 92 },
+                        { id: 5, name: 'Examination', icon: 'pencil-alt', pending: '3 exams', progress: 60 },
+                        { id: 6, name: 'Library', icon: 'book', pending: '5,200 books', progress: 80 },
+                        { id: 7, name: 'Transport', icon: 'bus', pending: '12 buses', progress: 75 },
+                        { id: 8, name: 'Communication', icon: 'comments', pending: '1.2k msgs', progress: 95 }
+                    ]
+                };
+                localStorage.setItem('schoolData', JSON.stringify(defaultData));
+            }
+        }
+
+        function getData() {
+            return JSON.parse(localStorage.getItem('schoolData')) || {};
+        }
+
+        function saveData(data) {
+            localStorage.setItem('schoolData', JSON.stringify(data));
+        }
+
+        // ========== EDITING FUNCTIONS ==========
+        function enableEdit(type, id, element, field) {
+            editingType = type;
+            editingId = id;
+            const currentValue = element.textContent;
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = currentValue;
+            input.className = 'editable-input';
+            input.dataset.field = field;
+            
+            element.innerHTML = '';
+            element.appendChild(input);
+            input.focus();
+            
+            input.onblur = function() {
+                saveEdit(type, id, element, input.value, field);
+            };
+            
+            input.onkeypress = function(e) {
+                if (e.key === 'Enter') {
+                    saveEdit(type, id, element, input.value, field);
+                }
+            };
+        }
+
+        function saveEdit(type, id, element, newValue, field) {
+            const data = getData();
+            
+            if (type === 'stat') {
+                data.stats[id].value = newValue;
+            } else if (type === 'student') {
+                const student = data.students.find(s => s.id === id);
+                if (student) student[field] = newValue;
+            } else if (type === 'teacher') {
+                const teacher = data.teachers.find(t => t.id === id);
+                if (teacher) teacher[field] = newValue;
+            } else if (type === 'fee') {
+                const fee = data.fees.find(f => f.id === id);
+                if (fee) fee[field] = newValue;
+            } else if (type === 'attendance') {
+                const record = data.attendance.find(a => a.id === id);
+                if (record) record[field] = newValue;
+            } else if (type === 'exam') {
+                const exam = data.exams.find(e => e.id === id);
+                if (exam) exam[field] = newValue;
+            } else if (type === 'book') {
+                const book = data.books.find(b => b.id === id);
+                if (book) book[field] = newValue;
+            } else if (type === 'route') {
+                const route = data.routes.find(r => r.id === id);
+                if (route) route[field] = newValue;
+            }
+            
+            saveData(data);
+            element.textContent = newValue;
+        }
+
+        function deleteItem(type, id) {
+            if (confirm('Are you sure you want to delete this item?')) {
+                const data = getData();
+                
+                if (type === 'student') data.students = data.students.filter(s => s.id !== id);
+                else if (type === 'teacher') data.teachers = data.teachers.filter(t => t.id !== id);
+                else if (type === 'fee') data.fees = data.fees.filter(f => f.id !== id);
+                else if (type === 'attendance') data.attendance = data.attendance.filter(a => a.id !== id);
+                else if (type === 'exam') data.exams = data.exams.filter(e => e.id !== id);
+                else if (type === 'book') data.books = data.books.filter(b => b.id !== id);
+                else if (type === 'route') data.routes = data.routes.filter(r => r.id !== id);
+                
+                saveData(data);
+                showSection(currentSection);
+            }
+        }
+
+        // ========== ADD NEW ITEMS ==========
+        function showAddModal(type) {
+            editingType = type;
+            editingId = null;
+            
+            let modalHtml = '';
+            
+            if (type === 'student') {
+                modalHtml = `
+                    <input type="text" id="modalName" placeholder="Student Name">
+                    <input type="text" id="modalFather" placeholder="Father Name">
+                    <input type="text" id="modalClass" placeholder="Class">
+                    <input type="text" id="modalDate" placeholder="Admission Date">
+                    <select id="modalStatus">
+                        <option value="Paid">Paid</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                `;
+            } else if (type === 'teacher') {
+                modalHtml = `
+                    <input type="text" id="modalName" placeholder="Teacher Name">
+                    <input type="text" id="modalSubject" placeholder="Subject">
+                    <input type="text" id="modalQualification" placeholder="Qualification">
+                    <input type="text" id="modalExperience" placeholder="Experience">
+                `;
+            } else if (type === 'fee') {
+                modalHtml = `
+                    <input type="text" id="modalStudent" placeholder="Student Name">
+                    <input type="text" id="modalClass" placeholder="Class">
+                    <input type="text" id="modalAmount" placeholder="Amount">
+                    <input type="text" id="modalDate" placeholder="Date">
+                    <input type="text" id="modalMode" placeholder="Payment Mode">
+                    <select id="modalStatus">
+                        <option value="Paid">Paid</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                `;
+            } else if (type === 'attendance') {
+                modalHtml = `
+                    <input type="text" id="modalClass" placeholder="Class (e.g., 4-A)">
+                    <input type="text" id="modalTotal" placeholder="Total Students">
+                    <input type="text" id="modalPresent" placeholder="Present">
+                    <input type="text" id="modalAbsent" placeholder="Absent">
+                    <input type="text" id="modalPercentage" placeholder="Percentage">
+                `;
+            } else if (type === 'exam') {
+                modalHtml = `
+                    <input type="text" id="modalName" placeholder="Exam Name">
+                    <input type="text" id="modalClass" placeholder="Class">
+                    <input type="text" id="modalSubject" placeholder="Subject">
+                    <input type="text" id="modalDate" placeholder="Date">
+                    <input type="text" id="modalTime" placeholder="Time">
+                    <input type="text" id="modalStatus" placeholder="Status">
+                `;
+            } else if (type === 'book') {
+                modalHtml = `
+                    <input type="text" id="modalBookId" placeholder="Book ID">
+                    <input type="text" id="modalName" placeholder="Book Name">
+                    <input type="text" id="modalAuthor" placeholder="Author">
+                    <input type="text" id="modalIssuedTo" placeholder="Issued To">
+                    <input type="text" id="modalIssueDate" placeholder="Issue Date">
+                    <input type="text" id="modalDueDate" placeholder="Due Date">
+                `;
+            } else if (type === 'route') {
+                modalHtml = `
+                    <input type="text" id="modalRouteNo" placeholder="Route No.">
+                    <input type="text" id="modalDriver" placeholder="Driver Name">
+                    <input type="text" id="modalVehicle" placeholder="Vehicle No.">
+                    <input type="text" id="modalStops" placeholder="Number of Stops">
+                    <input type="text" id="modalStudents" placeholder="Students Count">
+                    <input type="text" id="modalStatus" placeholder="Status">
+                `;
+            }
+            
+            document.getElementById('modalTitle').textContent = 'Add New ' + 
+                type.charAt(0).toUpperCase() + type.slice(1);
+            document.getElementById('modalBody').innerHTML = modalHtml;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function saveModalData() {
+            const data = getData();
+            
+            if (editingType === 'student') {
+                const newStudent = {
+                    id: Date.now(),
+                    name: document.getElementById('modalName').value,
+                    father: document.getElementById('modalFather').value,
+                    class: document.getElementById('modalClass').value,
+                    admissionDate: document.getElementById('modalDate').value,
+                    feeStatus: document.getElementById('modalStatus').value
+                };
+                data.students.push(newStudent);
+            } else if (editingType === 'teacher') {
+                const newTeacher = {
+                    id: Date.now(),
+                    name: document.getElementById('modalName').value,
+                    subject: document.getElementById('modalSubject').value,
+                    qualification: document.getElementById('modalQualification').value,
+                    experience: document.getElementById('modalExperience').value
+                };
+                data.teachers.push(newTeacher);
+            } else if (editingType === 'fee') {
+                const newFee = {
+                    id: Date.now(),
+                    student: document.getElementById('modalStudent').value,
+                    class: document.getElementById('modalClass').value,
+                    amount: document.getElementById('modalAmount').value,
+                    date: document.getElementById('modalDate').value,
+                    mode: document.getElementById('modalMode').value,
+                    status: document.getElementById('modalStatus').value
+                };
+                data.fees.push(newFee);
+            } else if (editingType === 'attendance') {
+                const newAttendance = {
+                    id: Date.now(),
+                    class: document.getElementById('modalClass').value,
+                    total: document.getElementById('modalTotal').value,
+                    present: document.getElementById('modalPresent').value,
+                    absent: document.getElementById('modalAbsent').value,
+                    percentage: document.getElementById('modalPercentage').value
+                };
+                data.attendance.push(newAttendance);
+            } else if (editingType === 'exam') {
+                const newExam = {
+                    id: Date.now(),
+                    name: document.getElementById('modalName').value,
+                    class: document.getElementById('modalClass').value,
+                    subject: document.getElementById('modalSubject').value,
+                    date: document.getElementById('modalDate').value,
+                    time: document.getElementById('modalTime').value,
+                    status: document.getElementById('modalStatus').value
+                };
+                data.exams.push(newExam);
+            } else if (editingType === 'book') {
+                const newBook = {
+                    id: Date.now(),
+                    bookId: document.getElementById('modalBookId').value,
+                    name: document.getElementById('modalName').value,
+                    author: document.getElementById('modalAuthor').value,
+                    issuedTo: document.getElementById('modalIssuedTo').value,
+                    issueDate: document.getElementById('modalIssueDate').value,
+                    dueDate: document.getElementById('modalDueDate').value
+                };
+                data.books.push(newBook);
+            } else if (editingType === 'route') {
+                const newRoute = {
+                    id: Date.now(),
+                    routeNo: document.getElementById('modalRouteNo').value,
+                    driver: document.getElementById('modalDriver').value,
+                    vehicle: document.getElementById('modalVehicle').value,
+                    stops: document.getElementById('modalStops').value,
+                    students: document.getElementById('modalStudents').value,
+                    status: document.getElementById('modalStatus').value
+                };
+                data.routes.push(newRoute);
+            }
+            
+            saveData(data);
+            closeModal();
+            showSection(currentSection);
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // ========== SECTION RENDERING ==========
+        function showSection(section) {
+            currentSection = section;
+            const data = getData();
+            let html = '';
+
+            if (section === 'dashboard') {
+                // Stats Cards
+                html = '<div class="stats-grid">';
+                for (let [key, stat] of Object.entries(data.stats)) {
+                    html += `
+                        <div class="stat-card editable-card">
+                            <div class="edit-controls">
+                                <button class="edit-btn" onclick="enableEdit('stat', '${key}', this.parentElement.parentElement.querySelector('.number'), 'value')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-${key === 'totalStudents' ? 'user-graduate' : 
+                                    key === 'totalTeachers' ? 'chalkboard-teacher' : 
+                                    key === 'monthlyCollection' ? 'rupee-sign' : 'clock'}"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>${stat.label}</h3>
+                                <div class="number" ondblclick="enableEdit('stat', '${key}', this, 'value')">${stat.value}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+                html += '</div>';
+
+                // Modules Section
+                html += `
+                    <div class="section-title">
+                        <h2><i class="fas fa-cubes"></i> System Modules</h2>
+                    </div>
+                    <div class="modules-grid">
+                `;
+                
+                data.modules.forEach(module => {
+                    html += `
+                        <div class="module-card">
+                            <div class="module-header">
+                                <div class="module-icon">
+                                    <i class="fas fa-${module.icon}"></i>
+                                </div>
+                                <h3>${module.name}</h3>
+                            </div>
+                            <p style="color: #666;">Pending: ${module.pending}</p>
+                            <div class="progress-bar" style="margin-top: 15px; background: #f0f0f0; height: 6px; border-radius: 10px;">
+                                <div class="progress" style="width: ${module.progress}%; height: 100%; background: linear-gradient(90deg, #667eea, #764ba2); border-radius: 10px;"></div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+            }
+            
+            else if (section === 'students') {
+                html = `
+                    <div class="section-title">
+                        <h2><i class="fas fa-user-graduate"></i> All Students</h2>
+                        <button class="add-btn" onclick="showAddModal('student')">
+                            <i class="fas fa-plus"></i> Add Student
+                        </button>
+                    </div>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Father Name</th>
+                                    <th>Class</th>
+                                    <th>Admission Date</th>
+                                    <th>Fee Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                data.students.forEach(student => {
+                    html += `
+                        <tr>
+                            <td ondblclick="enableEdit('student', ${student.id}, this, 'name')">${student.name}</td>
+                            <td ondblclick="enableEdit('student', ${student.id}, this, 'father')">${student.father}</td>
+                            <td ondblclick="enableEdit('student', ${student.id}, this, 'class')">${student.class}</td>
+                            <td ondblclick="enableEdit('student', ${student.id}, this, 'admissionDate')">${student.admissionDate}</td>
+                            <td><span class="status-badge ${student.feeStatus === 'Paid' ? 'status-paid' : 'status-pending'}">${student.feeStatus}</span></td>
+                            <td>
+                                <button class="delete-btn" style="width: 30px; height: 30px;" onclick="deleteItem('student', ${student.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table></div>';
+            }
+            
+            else if (section === 'teachers') {
+                html = `
+                    <div class="section-title">
+                        <h2><i class="fas fa-chalkboard-teacher"></i> All Teachers</h2>
+                        <button class="add-btn" onclick="showAddModal('teacher')">
+                            <i class="fas fa-plus"></i> Add Teacher
+                        </button>
+                    </div>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Subject</th>
+                                    <th>Qualification</th>
+                                    <th>Experience</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                data.teachers.forEach(teacher => {
+                    html += `
+                        <tr>
+                            <td ondblclick="enableEdit('teacher', ${teacher.id}, this, 'name')">${teacher.name}</td>
+                            <td ondblclick="enableEdit('teacher', ${teacher.id}, this, 'subject')">${teacher.subject}</td>
+                            <td ondblclick="enableEdit('teacher', ${teacher.id}, this, 'qualification')">${teacher.qualification}</td>
+                            <td ondblclick="enableEdit('teacher', ${teacher.id}, this, 'experience')">${teacher.experience}</td>
+                            <td>
+                                <button class="delete-btn" style="width: 30px; height: 30px;" onclick="deleteItem('teacher', ${teacher.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table></div>';
+            }
+            
+            else if (section === 'fees') {
+                html = `
+                    <div class="fee-summary">
+                        <div class="fee-card">
+                            <i class="fas fa-wallet" style="font-size: 30px; margin-bottom: 10px;"></i>
+                            <h3>Total Collected</h3>
+                            <h2 style="font-size: 32px;">₹28,50,000</h2>
+                        </div>
+                        <div class="fee-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <i class="fas fa-clock" style="font-size: 30px; margin-bottom: 10px;"></i>
+                            <h3>Pending Dues</h3>
+                            <h2 style="font-size: 32px;">₹8,20,000</h2>
+                        </div>
+                        <div class="fee-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <i class="fas fa-percent" style="font-size: 30px; margin-bottom: 10px;"></i>
+                            <h3>Collection Rate</h3>
+                            <h2 style="font-size: 32px;">92%</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="section-title">
+                        <h2><i class="fas fa-history"></i> Fee Transactions</h2>
+                        <button class="add-btn" onclick="showAddModal('fee')">
+                            <i class="fas fa-plus"></i> Add Transaction
+                        </button>
+                    </div>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Class</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                    <th>Mode</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                data.fees.forEach(fee => {
+                    html += `
+                        <tr>
+                            <td ondblclick="enableEdit('fee', ${fee.id}, this, 'student')">${fee.student}</td>
+                            <td ondblclick="enableEdit('fee', ${fee.id}, this, 'class')">${fee.class}</td>
+                            <td ondblclick="enableEdit('fee', ${fee.id}, this, 'amount')">₹${fee.amount}</td>
+                            <td ondblclick="enableEdit('fee', ${fee.id}, this, 'date')">${fee.date}</td>
+                            <td ondblclick="enableEdit('fee', ${fee.id}, this, 'mode')">${fee.mode}</td>
+                            <td><span class="status-badge ${fee.status === 'Paid' ? 'status-paid' : 'status-pending'}">${fee.status}</span></td>
+                            <td>
+                                <button class="delete-btn" style="width: 30px; height: 30px;" onclick="deleteItem('fee', ${fee.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table></div>';
+            }
+            
+            else if (section === 'attendance') {
+                html = `
+                    <div class="section-title">
+                        <h2><i class="fas fa-calendar-check"></i> Today's Attendance</h2>
+                        <button class="add-btn" onclick="showAddModal('attendance')">
+                            <i class="fas fa-plus"></i> Add Attendance
+                        </button>
+                    </div>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Class</th>
+                                    <th>Total Students</th>
+                                    <th>Present</th>
+                                    <th>Absent</th>
+                                    <th>Percentage</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                data.attendance.forEach(record => {
+                    html += `
+                        <tr>
+                            <td ondblclick="enableEdit('attendance', ${record.id}, this, 'class')">${record.class}</td>
+                            <td ondblclick="enableEdit('attendance', ${record.id}, this, 'total')">${record.total}</td>
+                            <td ondblclick="enableEdit('attendance', ${record.id}, this, 'present')">${record.present}</td>
+                            <td ondblclick="enableEdit('attendance', ${record.id}, this, 'absent')">${record.absent}</td>
+                            <td ondblclick="enableEdit('attendance', ${record.id}, this, 'percentage')">${record.percentage}</td>
+                            <td>
+                                <button class="delete-btn" style="width: 30px; height: 30px;" onclick="deleteItem('attendance', ${record.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table></div>';
+            }
+            
+            else if (section === 'exams') {
+                html = `
+                    <div class="section-title">
+                        <h2><i class="fas fa-pencil-alt"></i> Exam Schedule</h2>
+                        <button class="add-btn" onclick="showAddModal('exam')">
+                            <i class="fas fa-plus"></i> Add Exam
+                        </button>
+                    </div>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Exam Name</th>
+                                    <th>Class</th>
+                                    <th>Subject</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                data.exams.forEach(exam => {
+                    html += `
+                        <tr>
+                            <td ondblclick="enableEdit('exam', ${exam.id}, this, 'name')">${exam.name}</td>
+                            <td ondblclick="enableEdit('exam', ${exam.id}, this, 'class')">${exam.class}</td>
+                            <td ondblclick="enableEdit('exam', ${exam.id}, this, 'subject')">${exam.subject}</td>
+                            <td ondblclick="enableEdit('exam', ${exam.id}, this, 'date')">${exam.date}</td>
+                            <td ondblclick="enableEdit('exam', ${exam.id}, this, 'time')">${exam.time}</td>
+                            <td><span class="status-badge status-pending">${exam.status}</span></td>
+                            <td>
+                                <button class="delete-btn" style="width: 30px; height: 30px;" onclick="deleteItem('exam', ${exam.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table></div>';
+            }
+            
+            else if (section === 'library') {
+                html = `
+                    <div class="section-title">
+                        <h2><i class="fas fa-book"></i> Library Management</h2>
+                        <button class="add-btn" onclick="showAddModal('book')">
+                            <i class="fas fa-plus"></i> Add Book
+                        </button>
+                    </div>
+                    <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-book"></i></div>
+                            <div class="stat-info">
+                                <h3>Total Books</h3>
+                                <div class="number">5,200</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-hand-holding"></i></div>
+                            <div class="stat-info">
+                                <h3>Issued Books</h3>
+                                <div class="number">145</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                            <div class="stat-info">
+                                <h3>Overdue</h3>
+                                <div class="number">12</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Book ID</th>
+                                    <th>Book Name</th>
+                                    <th>Author</th>
+                                    <th>Issued To</th>
+                                    <th>Issue Date</th>
+                                    <th>Due Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                data.books.forEach(book => {
+                    html += `
+                        <tr>
+                            <td ondblclick="enableEdit('book', ${book.id}, this, 'bookId')">${book.bookId}</td>
+                            <td ondblclick="enableEdit('book', ${book.id}, this, 'name')">${book.name}</td>
+                            <td ondblclick="enableEdit('book', ${book.id}, this, 'author')">${book.author}</td>
+                            <td ondblclick="enableEdit('book', ${book.id}, this, 'issuedTo')">${book.issuedTo}</td>
+                            <td ondblclick="enableEdit('book', ${book.id}, this, 'issueDate')">${book.issueDate}</td>
+                            <td ondblclick="enableEdit('book', ${book.id}, this, 'dueDate')">${book.dueDate}</td>
+                            <td>
+                                <button class="delete-btn" style="width: 30px; height: 30px;" onclick="deleteItem('book', ${book.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table></div>';
+            }
+            
+            else if (section === 'transport') {
+                html = `
+                    <div class="section-title">
+                        <h2><i class="fas fa-bus"></i> Transport Management</h2>
+                        <button class="add-btn" onclick="showAddModal('route')">
+                            <i class="fas fa-plus"></i> Add Route
+                        </button>
+                    </div>
+                    <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-bus"></i></div>
+                            <div class="stat-info">
+                                <h3>Total Buses</h3>
+                                <div class="number">12</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-users"></i></div>
+                            <div class="stat-info">
+                                <h3>Students</h3>
+                                <div class="number">350</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-route"></i></div>
+                            <div class="stat-info">
+                                <h3>Routes</h3>
+                                <div class="number">8</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Route No.</th>
+                                    <th>Driver Name</th>
+                                    <th>Vehicle No.</th>
+                                    <th>Stops</th>
+                                    <th>Students</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                data.routes.forEach(route => {
+                    html += `
+                        <tr>
+                            <td ondblclick="enableEdit('route', ${route.id}, this, 'routeNo')">${route.routeNo}</td>
+                            <td ondblclick="enableEdit('route', ${route.id}, this, 'driver')">${route.driver}</td>
+                            <td ondblclick="enableEdit('route', ${route.id}, this, 'vehicle')">${route.vehicle}</td>
+                            <td ondblclick="enableEdit('route', ${route.id}, this, 'stops')">${route.stops}</td>
+                            <td ondblclick="enableEdit('route', ${route.id}, this, 'students')">${route.students}</td>
+                            <td><span class="status-badge status-paid">${route.status}</span></td>
+                            <td>
+                                <button class="delete-btn" style="width: 30px; height: 30px;" onclick="deleteItem('route', ${route.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table></div>';
+            }
+
+            document.getElementById('mainContent').innerHTML = html;
+            
+            // Update active nav item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+    </script>
+</body>
+</html>
